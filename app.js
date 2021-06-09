@@ -23,20 +23,31 @@ const navList = document.querySelectorAll("header ul li a");
 
 window.addEventListener("scroll", () => {
      let current = "";
+     let entireH = 0;
      sections.forEach(section => {
           const sectionTop = section.offsetTop;
           const sectionHeight = section.clientHeight;
-          if (pageYOffset >= sectionTop - sectionHeight / 3) {
+          entireH += sectionHeight;
+          if (pageYOffset >= sectionTop - sectionHeight / 2) {
                current = section.getAttribute("id");
           }
+          // console.log(`${section.id}:${sectionTop - sectionHeight / 2}`);
      });
      navList.forEach(li => {
-          // console.log(li.classList);
           li.classList.remove("current");
           if (li.classList.contains(current)) {
                li.classList.add("current");
           }
      });
+     // console.log(`${pageYOffset}`);
+     const bodyH = document.body.clientHeight;
+     // console.log(`${entireH - bodyH}`);
+     if (pageYOffset >= entireH - bodyH) {
+          navList.forEach(li => {
+               li.classList.remove("current");
+          });
+          navList[navList.length - 1].classList.add("current");
+     }
 });
 
 // const educationUI = document.querySelector("#education .container-fluid .row");
